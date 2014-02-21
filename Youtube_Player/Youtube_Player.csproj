@@ -64,7 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomComboBox.cs">
+    <Compile Include="ComboBoxWithBorder.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="EmbeddedAssembly.cs" />

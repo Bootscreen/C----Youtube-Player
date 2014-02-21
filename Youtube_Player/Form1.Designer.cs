@@ -36,7 +36,7 @@
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.menue_close = new System.Windows.Forms.ToolStripMenuItem();
 			this.menue_ontop = new System.Windows.Forms.ToolStripMenuItem();
-			this.menue_autoplay = new System.Windows.Forms.ToolStripMenuItem();
+			this.menue_removeplayed = new System.Windows.Forms.ToolStripMenuItem();
 			this.sucheToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.button3 = new System.Windows.Forms.Button();
 			this.listView1 = new System.Windows.Forms.ListView();
@@ -46,6 +46,7 @@
 			this.button5 = new System.Windows.Forms.Button();
 			this.button6 = new System.Windows.Forms.Button();
 			this.button7 = new System.Windows.Forms.Button();
+			this.menue_autoplay = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.YTplayer)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -113,6 +114,7 @@
             this.menue_close,
             this.menue_ontop,
             this.menue_autoplay,
+            this.menue_removeplayed,
             this.sucheToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
@@ -144,15 +146,15 @@
 			this.menue_ontop.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.menue_ontop.Click += new System.EventHandler(this.menue_ontop_Click);
 			// 
-			// menue_autoplay
+			// menue_removeplayed
 			// 
-			this.menue_autoplay.ForeColor = System.Drawing.Color.White;
-			this.menue_autoplay.Image = global::Youtube_Player.Properties.Resources._checked;
-			this.menue_autoplay.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.menue_autoplay.Name = "menue_autoplay";
-			this.menue_autoplay.Size = new System.Drawing.Size(80, 20);
-			this.menue_autoplay.Text = "Autoplay";
-			this.menue_autoplay.Click += new System.EventHandler(this.menue_autoplay_Click);
+			this.menue_removeplayed.ForeColor = System.Drawing.Color.White;
+			this.menue_removeplayed.Image = global::Youtube_Player.Properties.Resources._checked;
+			this.menue_removeplayed.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.menue_removeplayed.Name = "menue_removeplayed";
+			this.menue_removeplayed.Size = new System.Drawing.Size(113, 20);
+			this.menue_removeplayed.Text = "Remove Played";
+			this.menue_removeplayed.Click += new System.EventHandler(this.menue_removeplayed_Click);
 			// 
 			// sucheToolStripMenuItem
 			// 
@@ -267,6 +269,16 @@
 			this.button7.UseVisualStyleBackColor = false;
 			this.button7.Click += new System.EventHandler(this.button7_Click);
 			// 
+			// menue_autoplay
+			// 
+			this.menue_autoplay.ForeColor = System.Drawing.Color.White;
+			this.menue_autoplay.Image = global::Youtube_Player.Properties.Resources._checked;
+			this.menue_autoplay.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.menue_autoplay.Name = "menue_autoplay";
+			this.menue_autoplay.Size = new System.Drawing.Size(80, 20);
+			this.menue_autoplay.Text = "Autoplay";
+			this.menue_autoplay.Click += new System.EventHandler(this.menue_autoplay_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -311,7 +323,7 @@
 		private System.Windows.Forms.Button button3;
 		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private System.Windows.Forms.ColumnHeader columnHeader2;
-		private System.Windows.Forms.ToolStripMenuItem menue_autoplay;
+		private System.Windows.Forms.ToolStripMenuItem menue_removeplayed;
 		private System.Windows.Forms.Button button4;
 		private System.Windows.Forms.Button button5;
 		private System.Windows.Forms.ToolStripMenuItem sucheToolStripMenuItem;
@@ -319,6 +331,7 @@
 		private AxShockwaveFlashObjects.AxShockwaveFlash YTplayer;
 		private System.Windows.Forms.Button button6;
 		private System.Windows.Forms.Button button7;
+		private System.Windows.Forms.ToolStripMenuItem menue_autoplay;
 	}
 }
 

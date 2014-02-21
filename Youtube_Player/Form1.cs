@@ -21,6 +21,7 @@ namespace Youtube_Player
 		string url_global = "";
 		bool ende = false;
 		bool autoplay = true;
+		bool removeplayed = true;
 
 		public Form1()
 		{
@@ -222,32 +223,60 @@ namespace Youtube_Player
 					if (listView1.Items[play_index].Text.StartsWith("»") || listView1.Items[play_index].Text.StartsWith("ǁ"))
 					{
 						listView1.Items[play_index].Text = listView1.Items[play_index].Text.Substring(2);
+						listView1.Items[play_index].ForeColor = Color.White;
 					}
 					listView1.Items[play_index].Text = "» " + listView1.Items[play_index].Text;
+					listView1.Items[play_index].ForeColor = Color.Orange;
 					break;
 				case 2:		//paused
 					if (listView1.Items[play_index].Text.StartsWith("»") || listView1.Items[play_index].Text.StartsWith("ǁ"))
 					{
 						listView1.Items[play_index].Text = listView1.Items[play_index].Text.Substring(2);
+						listView1.Items[play_index].ForeColor = Color.White;
 					}
 					listView1.Items[play_index].Text = "ǁ " + listView1.Items[play_index].Text;
+					listView1.Items[play_index].ForeColor = Color.Orange;
 					break;
 				case 0:		//ended
 					if (listView1.Items[play_index].Text.StartsWith("»") || listView1.Items[play_index].Text.StartsWith("ǁ"))
 					{
 						listView1.Items[play_index].Text = listView1.Items[play_index].Text.Substring(2);
+						listView1.Items[play_index].ForeColor = Color.White;
 					}
 
-					if (listView1.Items[play_index + 1] != null)
+					if (play_index + 1 < listView1.Items.Count)
 					{
 						play_index++;
 						string item = listView1.Items[play_index].Text;
 						url_global = item + "?autoplay=1&version=3&enablejsapi=1&autohide=1";
 						ende = true;
+
 					}
 					else
 					{
 						button5.Enabled = false;
+					}
+
+					if (removeplayed)
+					{
+						if (play_index == listView1.Items.Count - 1)
+						{
+							listView1.Items[play_index].Selected = true;
+							remove_url();
+							if (play_index > 0)
+							{
+								play_index--;
+							}
+						}
+						else
+						{
+							listView1.Items[play_index - 1].Selected = true;
+							remove_url();
+							if (play_index > 0)
+							{
+								play_index--;
+							}
+						}
 					}
 					break; 
 				//case 3: ; break; //buffering
@@ -281,7 +310,7 @@ namespace Youtube_Player
 					listView1.Items.Add(item);
 				}
 			}
-			columnHeader2.Width = listView1.Width - columnHeader1.Width;
+			columnHeader2.Width = listView1.Width - columnHeader1.Width - 25;
 
 			button4.Width = this.Width / 2;
 			button5.Width = this.Width / 2;
@@ -315,31 +344,7 @@ namespace Youtube_Player
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-			if(listView1.SelectedIndices.Count == 1)
-			{ 
-				int index = listView1.SelectedIndices[0];
-				if(play_index != index)
-				{
-					listView1.Items.RemoveAt(index);
-
-					if (play_index > index)
-					{
-						play_index--;
-					}
-
-					if (listView1.Items.Count > 0)
-					{
-						if (listView1.Items.Count < index)
-						{
-							listView1.Items[index].Selected = true;
-						}
-						else
-						{
-							listView1.Items[index - 1].Selected = true;
-						}
-					}
-				}
-			}
+			remove_url();
 		}
 
 		private void button3_Click(object sender, EventArgs e)
@@ -347,6 +352,38 @@ namespace Youtube_Player
 			if (add_url(textBox1.Text))
 			{
 				textBox1.Text = "";
+			}
+		}
+
+		public void remove_url()
+		{
+			if (listView1.SelectedIndices.Count == 1)
+			{
+				int index = listView1.SelectedIndices[0];
+				if (play_index == index)
+				{
+					play_next();
+				}
+
+				listView1.Items.RemoveAt(index);
+
+				if (play_index > index)
+				{
+					play_index--;
+				}
+
+				if (listView1.Items.Count > 0)
+				{
+					if (listView1.Items.Count < index || index - 1 < 0)
+					{
+						listView1.Items[index].Selected = true;
+					}
+					else
+					{
+						listView1.Items[index - 1].Selected = true;
+					}
+					listView1.Select();
+				}
 			}
 		}
 
@@ -443,7 +480,7 @@ namespace Youtube_Player
 
 		private void listView1_Resize(object sender, EventArgs e)
 		{
-			columnHeader2.Width = listView1.Width - columnHeader1.Width;
+			columnHeader2.Width = listView1.Width - columnHeader1.Width - 25;
 		}
 
 		private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -458,11 +495,13 @@ namespace Youtube_Player
 						if (listView1.Items[play_index].Text.StartsWith("»") || listView1.Items[play_index].Text.StartsWith("ǁ"))
 						{
 							listView1.Items[play_index].Text = listView1.Items[play_index].Text.Substring(2);
+							listView1.Items[play_index].ForeColor = Color.White;
 						}
 					}
 					if (listView1.Items[index].Text.StartsWith("»") || listView1.Items[index].Text.StartsWith("ǁ"))
 					{
 						listView1.Items[index].Text = listView1.Items[index].Text.Substring(2);
+						listView1.Items[play_index].ForeColor = Color.White;
 					}
 
 					string item = listView1.Items[index].Text;
@@ -551,7 +590,7 @@ namespace Youtube_Player
 			button5.Location = loc;
 		}
 
-		private void button4_Click(object sender, EventArgs e)
+		private void play_previous()
 		{
 			button5.Enabled = true;
 			if (play_index - 1 >= 0)
@@ -559,8 +598,9 @@ namespace Youtube_Player
 				if (listView1.Items[play_index].Text.StartsWith("»") || listView1.Items[play_index].Text.StartsWith("ǁ"))
 				{
 					listView1.Items[play_index].Text = listView1.Items[play_index].Text.Substring(2);
+					listView1.Items[play_index].ForeColor = Color.White;
 				}
-				if (listView1.Items[play_index - 1] != null)
+				if (play_index - 1 >= 0)
 				{
 					play_index--;
 					string item = listView1.Items[play_index].Text;
@@ -574,7 +614,12 @@ namespace Youtube_Player
 			}
 		}
 
-		private void button5_Click(object sender, EventArgs e)
+		private void button4_Click(object sender, EventArgs e)
+		{
+			play_previous();
+		}
+
+		private void play_next()
 		{
 			button4.Enabled = true;
 			if (play_index + 1 < listView1.Items.Count)
@@ -582,8 +627,9 @@ namespace Youtube_Player
 				if (listView1.Items[play_index].Text.StartsWith("»") || listView1.Items[play_index].Text.StartsWith("ǁ"))
 				{
 					listView1.Items[play_index].Text = listView1.Items[play_index].Text.Substring(2);
+					listView1.Items[play_index].ForeColor = Color.White;
 				}
-				if (listView1.Items[play_index + 1] != null)
+				if (play_index + 1 < listView1.Items.Count)
 				{
 					play_index++;
 					string item = listView1.Items[play_index].Text;
@@ -596,6 +642,11 @@ namespace Youtube_Player
 			{
 				button5.Enabled = false;
 			}
+		}
+
+		private void button5_Click(object sender, EventArgs e)
+		{
+			play_next();
 		}
 
 		private void sucheToolStripMenuItem_Click(object sender, EventArgs e)
@@ -611,11 +662,16 @@ namespace Youtube_Player
 				if(listView1.SelectedIndices[0] > 0)
 				{
 					int i = listView1.SelectedIndices[0];
+					if (i == play_index)
+					{
+						play_index--;
+					}
 					ListViewItem temp = (ListViewItem)listView1.Items[i].Clone();
 					ListViewItem temp2 = (ListViewItem)listView1.Items[i - 1].Clone();
 					listView1.Items[i] = temp2;
 					listView1.Items[i - 1] = temp;
 					listView1.Items[i - 1].Selected = true;
+					listView1.Select();
 				}
 			}
 		}
@@ -627,13 +683,33 @@ namespace Youtube_Player
 				if (listView1.SelectedIndices[0] < listView1.Items.Count - 1)
 				{
 					int i = listView1.SelectedIndices[0];
+					if(i == play_index)
+					{
+						play_index++;
+					}
 					ListViewItem temp = (ListViewItem)listView1.Items[i].Clone();
 					ListViewItem temp2 = (ListViewItem)listView1.Items[i + 1].Clone();
 					listView1.Items[i] = temp2;
 					listView1.Items[i + 1] = temp;
 					listView1.Items[i + 1].Selected = true;
+					listView1.Select();
 				}
 			}
+		}
+
+		private void menue_removeplayed_Click(object sender, EventArgs e)
+		{
+			if (removeplayed == true)
+			{
+				menue_removeplayed.Image = Properties.Resources._unchecked;
+				removeplayed = false;
+			}
+			else
+			{
+				menue_removeplayed.Image = Properties.Resources._checked;
+				removeplayed = true;
+			}
+
 		}
 	}
 }
